@@ -1,0 +1,483 @@
+HW_2 Postman
+
+
+http://162.55.220.72:5005/first
+1. Отправить запрос - get
+2. Статус код 200 - 200
+3. Проверить, что в body приходит правильный string - This is the first responce from server!
+
+
+http://162.55.220.72:5005/user_info_3
+1. Отправить запрос - post
+		name = Igor
+		age = 30
+		salary = 1000
+2. Статус код 200
+		pm.test("Status code is 200", function () {
+    	pm.response.to.have.status(200);
+		});
+3. Спарсить response body в json - 
+		var jsonData = JSON.parse(responseBody);
+4. Проверить, что name в ответе равно name s request (name вбить руками.)
+		var resp_name = String(jsonData.name);
+		pm.test("Your name = Igor", function () {
+    	pm.expect(resp_name).to.be.equals("Igor");
+		});
+5. Проверить, что age в ответе равно age s request (age вбить руками.)
+		var resp_age = +jsonData.age;
+		pm.test("Your age = 30", function () {
+    	pm.expect(resp_age).to.be.equals(30);
+		});
+6. Проверить, что salary в ответе равно salary s request (salary вбить руками.)
+		vvar resp_salary = +jsonData.salary;
+		pm.test("Your salary = 1000", function () {
+    	pm.expect(resp_salary).to.be.equals(1000);
+		});
+7. Спарсить request.
+		var req_body = pm.request.toJSON();
+		var req_body = request.data;
+
+8. Проверить, что name в ответе равно name s request (name забрать из request.)
+		var req_body = pm.request.toJSON();
+		var req_body = request.data;
+		var req_name = String(req_body.name);
+
+		var jsonData = JSON.parse(responseBody);
+		var jsonData = pm.response.json();
+		var resp_name = String(jsonData.name);
+
+		pm.test("Compare request name = response name", function () {
+		    pm.expect(req_name).to.be.equals(resp_name);
+		});
+9. Проверить, что age в ответе равно age s request (age забрать из request.)
+		var req_body = pm.request.toJSON();
+		var req_body = request.data;
+		var req_age = String(req_body.age);
+
+		var jsonData = JSON.parse(responseBody);
+		var jsonData = pm.response.json();
+		var resp_age = String(jsonData.age);
+
+		pm.test("Compare request age = response age", function () {
+		    pm.expect(req_age).to.be.equals(resp_age);
+		});
+10. Проверить, что salary в ответе равно salary s request (salary забрать из request.)
+		var req_body = pm.request.toJSON();
+		var req_body = request.data;
+		var req_salary = String(req_body.salary);
+
+		var jsonData = JSON.parse(responseBody);
+		var jsonData = pm.response.json();
+		var resp_salary = String(jsonData.salary);
+
+		pm.test("Compare request salary = response salary", function () {
+		    pm.expect(req_salary).to.be.equals(resp_salary);
+		});
+11. Вывести в консоль параметр family из response.
+		var jsonData = JSON.parse(responseBody);
+		var jsonData = pm.response.json();
+		var resp_family = jsonData.family;
+
+		console.log(resp_family)
+12. Проверить что u_salary_1_5_year в ответе равно salary*4 (salary забрать из request)
+		var req_body = pm.request.toJSON();
+		var req_body = request.data;
+		var req_salary = String(req_body.salary);
+		var req_salary = req_salary * 4; 
+
+		var jsonData = JSON.parse(responseBody);
+		var jsonData = pm.response.json();
+		var resp_family = jsonData.family;
+		var resp_u_salary_1_5_year = resp_family.u_salary_1_5_year
+
+		pm.test("Compare request u_salary_1_5_year = response Salary * 4", function () {
+		    pm.expect(req_salary).to.be.equals(resp_u_salary_1_5_year);
+		});
+
+
+http://162.55.220.72:5005/object_info_3
+1. Отправить запрос - GET
+		name = Igor
+		age = 30
+		salary = 1000
+2. Статус код 200
+		pm.test("Status code is 200", function () {
+    	pm.response.to.have.status(200);
+		});
+3. Спарсить response body в json.
+		var jsonRespone = JSON.parse(responseBody);
+4. Спарсить request.
+		var req_body = pm.request.toJSON();
+		var req_body = request.data;
+5. Проверить, что name в ответе равно name s request (name забрать из request.)
+		var req_body = pm.request.toJSON();
+		var req_body = request.data;
+		var req_name = String(req_body.name);
+
+		var parsResponse = JSON.parse(responseBody);
+		var resp_name = String(parsResponse.name);
+
+		pm.test("The name from the request is equal to the name in the response", function (){
+		    pm.expect(req_name).to.be.equals(resp_name);
+		})
+6. Проверить, что age в ответе равно age s request (age забрать из request.)
+		var req_body = pm.request.toJSON();
+		var req_body = request.data;
+		var req_age = +req_body.age
+
+		var parsResponse = JSON.parse(responseBody);
+		var resp_age = +parsResponse.age;
+
+		pm.test("The age from the request is equal to the age in the response", function (){
+		    pm.expect(req_age).to.be.equals(resp_age);
+		})
+7. Проверить, что salary в ответе равно salary s request (salary забрать из request.)
+		var req_body = pm.request.toJSON();
+		var req_body = request.data;
+		var req_salary = String(req_body.salary);
+
+		var parsResponse = JSON.parse(responseBody);
+		var resp_salary = String(parsResponse.salary);
+
+		pm.test("The salary from the request is equal to the salary in the response", function (){
+		    pm.expect(req_salary).to.be.equals(resp_salary);
+		})
+8. Вывести в консоль параметр family из response.
+		var parsResponse = JSON.parse(responseBody);
+		var resp_family = parsResponse.family;
+
+		console.log(resp_family)
+9. Проверить, что у параметра dog есть параметры name.
+		var parsResponse = JSON.parse(responseBody);
+		var resp_family = parsResponse.family;
+
+		var pets = resp_family.pets;
+		var dog = pets.dog;
+
+		pm.test("Dog have name", function() {
+		    pm.expect(dog).to.have.property('name')
+		})
+
+10. Проверить, что у параметра dog есть параметры age.
+		var parsResponse = JSON.parse(responseBody);
+		var resp_family = parsResponse.family;
+
+		var pets = resp_family.pets;
+		var dog = pets.dog;
+
+		pm.test("Dog have age", function() {
+		    pm.expect(dog).to.have.property('age')
+		})		
+11. Проверить, что параметр name имеет значение Luky.
+		var parsResponse = JSON.parse(responseBody);
+		var resp_family = parsResponse.family;
+
+		var pets = resp_family.pets;
+		var dog = pets.dog;
+		var name_dog = String(dog.name);
+
+		pm.test("Name Dog = Luky", function (){
+		    pm.expect(name_dog).to.be.equals("Luky")
+		})
+12. Проверить, что параметр age имеет значение 4.
+		var parsResponse = JSON.parse(responseBody);
+		var resp_family = parsResponse.family;
+
+		var pets = resp_family.pets;
+		var dog = pets.dog;
+		var age_dog = +dog.age;
+
+		pm.test("age Dog = 4", function (){
+			pm.expect(age_dog).to.be.equals(4)
+		})
+
+http://162.55.220.72:5005/object_info_4
+1. Отправить запрос - GET
+		name = Igor
+		age = 30
+		salary = 1000
+2. Статус код 200
+		pm.test("Status code is 200", function () {
+    	pm.response.to.have.status(200);
+		});
+3. Спарсить response body в json.
+		var parsResponse = JSON.parse(responseBody);
+4. Спарсить request.
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+5. Проверить, что name в ответе равно name s request (name забрать из request.)
+		var parsResponse = JSON.parse(responseBody);
+		var resp_name = String(parsResponse.name);
+
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_name = String(req_body.name);
+
+		pm.test("Name response = Name request", function(){
+		    pm.expect(resp_name).to.be.equals(req_name);
+		})
+6. Проверить, что age в ответе равно age из request (age забрать из request.)
+		var parsResponse = JSON.parse(responseBody);
+		var resp_age = +parsResponse.age;
+
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_age = +req_body.age;
+
+		pm.test("Age response = Age request", function (){
+		    pm.expect(resp_age).to.be.equal(req_age);
+		})
+7. Вывести в консоль параметр salary из request.
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+
+		var req_salary = req_body.salary;
+
+		console.log(req_salary)
+8. Вывести в консоль параметр salary из response.
+		var parsResponse = JSON.parse(responseBody);
+		var resp_salary = parsResponse.salary;
+
+		console.log(resp_salary)
+9. Вывести в консоль 0-й элемент параметра salary из response.
+		var parsResponse = JSON.parse(responseBody);
+		var respSalary = parsResponse.salary
+
+		var key_0 = Object.values(respSalary)[0];
+
+		console.log("This is null param " + key_0)
+10. Вывести в консоль 1-й элемент параметра salary параметр salary из response.
+		var parsResponse = JSON.parse(responseBody);
+		var respSalary = parsResponse.salary
+
+		var key_1 = Object.values(respSalary)[1];
+
+		console.log("This is first param " + key_1)
+11. Вывести в консоль 2-й элемент параметра salary параметр salary из response.
+		var parsResponse = JSON.parse(responseBody);
+		var respSalary = parsResponse.salary
+
+		var key_2 = Object.values(respSalary)[2];
+
+		console.log("This is null param " + key_2)
+12. Проверить, что 0-й элемент параметра salary равен salary из request (salary забрать из request.)
+		var parsResponse = JSON.parse(responseBody);
+		var respSalary = parsResponse.salary;
+
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_salary = +req_body.salary;
+
+		var key_0 = +Object.values(respSalary)[0];
+
+		pm.test("Check that the 0th element of the salary parameter is equal to the salary from request", function(){
+		    pm.expect(req_salary).to.equals(key_0)
+		})
+13. Проверить, что 1-й элемент параметра salary равен salary*2 из request (salary забрать из request.)
+		var parsResponse = JSON.parse(responseBody);
+		var respSalary = parsResponse.salary;
+
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_salary = +req_body.salary;
+
+		var key_1 = +Object.values(respSalary)[1];
+
+		pm.test("Check that the 0th element of the salary parameter is equal to the salary from request", function(){
+		    pm.expect(req_salary*2).to.be.equals(key_1)
+		})
+
+14. Проверить, что 2-й элемент параметра salary равен salary*3 из request (salary забрать из request.)
+		var parsResponse = JSON.parse(responseBody);
+		var respSalary = parsResponse.salary;
+
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_salary = +req_body.salary;
+
+		var key_2 = +Object.values(respSalary)[2];
+
+		pm.test("Check that the 0th element of the salary parameter is equal to the salary from request", function(){
+		    pm.expect(req_salary*3).to.be.equals(key_2)
+		})
+15. Создать в окружении переменную name
+		pm.environment.set("name", JSON.stringify())
+16. Создать в окружении переменную age
+		pm.environment.set("age", JSON.stringify())
+17. Создать в окружении переменную salary
+		pm.environment.set("salary", JSON.stringify())
+18. Передать в окружение переменную name
+		var parsRespone = JSON.parse(responseBody);
+		var resp_name = parsRespone.name
+
+		pm.environment.set("name", JSON.stringify(resp_name))
+19. Передать в окружение переменную age
+		var parsRespone = JSON.parse(responseBody);
+		var resp_age = parsRespone.age
+
+		pm.environment.set("age", JSON.stringify(resp_age))
+20. Передать в окружение переменную salary
+		var parsRespone = JSON.parse(responseBody);
+		var resp_salary = parsRespone.salary
+
+		pm.environment.set("salary", JSON.stringify(resp_salary))
+21. Написать цикл который выведет в консоль по порядку элементы списка из параметра salary.
+		var parsResponse = JSON.parse(responseBody);
+		var respSalary = parsResponse.salary
+
+		for (let i = 0; i < respSalary.length; i += 1) {
+		    console.log(respSalary[i]);
+		}
+http://162.55.220.72:5005/user_info_2
+1. Вставить параметр salary из окружения в request
+		{{salary}}
+2. Вставить параметр age из окружения в age
+		{{age}}
+3. Вставить параметр name из окружения в name
+		{{name}}
+4. Отправить запрос.
+		Send
+5. Статус код 200
+		pm.test("Status code is 200", function () {
+    	pm.response.to.have.status(200);
+		});
+6. Спарсить response body в json.
+		var resp_body = JSON.parse(responseBody);
+7. Спарсить request.
+		var req_body = pm.request.toJSON;
+		var req_body = request.data
+8. Проверить, что json response имеет параметр start_qa_salary
+		var resp_body = JSON.parse(responseBody);
+		
+		pm.test('Has start_qa_salary', function() {
+		    pm.expect(resp_body).to.have.property('start_qa_salary')
+		})
+9. Проверить, что json response имеет параметр qa_salary_after_6_months
+		var resp_body = JSON.parse(responseBody);
+
+		pm.test("Has qa_salary_after_6_months", function(){
+		    pm.expect(resp_body).to.have.property('qa_salary_after_6_months')
+		})
+10. Проверить, что json response имеет параметр qa_salary_after_12_months
+		var resp_body = JSON.parse(responseBody);
+
+		pm.test('Has qa_salary_after_12_months', function(){
+		    pm.expect(resp_body).to.have.property('qa_salary_after_12_months')
+		})
+11. Проверить, что json response имеет параметр qa_salary_after_1.5_year
+		var resp_body = JSON.parse(responseBody);
+
+		pm.test("Has qa_salary_after_1.5_year", function(){
+		    pm.expect(resp_body).to.have.property('qa_salary_after_1.5_year')
+		})
+12. Проверить, что json response имеет параметр qa_salary_after_3.5_years
+		var resp_body = JSON.parse(responseBody);
+
+		pm.test("Has qa_salary_after_3.5_year", function(){
+		    pm.expect(resp_body).to.have.property('qa_salary_after_3.5_years')
+		})
+13. Проверить, что json response имеет параметр person
+		var resp_body = JSON.parse(responseBody);
+
+		pm.test("Has params person", function(){
+		    pm.expect(resp_body).to.have.property('person')
+		})
+14. Проверить, что параметр start_qa_salary равен salary из request (salary забрать из request.)
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_salary = +req_body.salary;
+
+		var resp_body = JSON.parse(responseBody);
+
+		var start_qa_salary = +Object.values(resp_body)[5];
+		pm.test('Проверить, что параметр start_qa_salary равен salary из request', function() {
+			pm.expect(req_salary).to.be.equals(start_qa_salary)
+		})
+15. Проверить, что параметр qa_salary_after_6_months равен salary*2 из request (salary забрать из request.)
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_salary = +req_body.salary;
+
+		var resp_body = JSON.parse(responseBody);
+
+		var salary_after_6 = +Object.values(resp_body)[4];
+		pm.test('Проверить, что параметр qa_salary_after_6_months равен salary*2 из request', function() {
+			pm.expect(req_salary*2).to.be.equals(salary_after_6)
+		})
+16. Проверить, что параметр qa_salary_after_12_months равен salary*2.7 из request (salary забрать из request.)
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_salary = +req_body.salary;
+
+		var resp_body = JSON.parse(responseBody);
+
+		var salary_after_12 = +Object.values(resp_body)[2];
+		pm.test('Проверить, что параметр qa_salary_after_12_months равен salary*2.7 из request', function() {
+			pm.expect(req_salary*2.7).to.be.equals(salary_after_12)
+		})
+17. Проверить, что параметр qa_salary_after_1.5_year равен salary*3.3 из request (salary забрать из request.)
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_salary = +req_body.salary;
+
+		var resp_body = JSON.parse(responseBody);
+
+		var salary_after_18 = +Object.values(resp_body)[1];
+		pm.test('Проверить, что параметр qa_salary_after_1.5_year равен salary*3.3 из request', function() {
+			pm.expect(req_salary*3.3).to.be.equals(salary_after_18)
+		})
+18. Проверить, что параметр qa_salary_after_3.5_years равен salary*3.8 из request (salary забрать из request.)
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_salary = +req_body.salary;
+
+		var resp_body = JSON.parse(responseBody);
+
+		var salary_after_42 = +Object.values(resp_body)[3];
+		pm.test('Проверить, что параметр qa_salary_after_3.5_years равен salary*3.8 из request', function() {
+			pm.expect(req_salary*3.8).to.be.equals(salary_after_42)
+		})
+19. Проверить, что в параметре person, 1-й элемент из u_name равен salary из request (salary забрать из request.)
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_salary = +req_body.salary;
+
+		var resp_body = JSON.parse(responseBody);
+		var person = resp_body.person;
+		var u_name = person.u_name;
+		var salary_person = +Object.values(u_name)[1];
+
+		pm.test("Проверить, что в параметре person, 1-й элемент из u_name равен salary из request", function(){
+		    pm.expect(req_salary).to.be.equals(salary_person)
+		})
+20. Проверить, что что параметр u_age равен age из request (age забрать из request.)
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_age = +req_body.age;
+
+		var resp_body = JSON.parse(responseBody);
+		var person = resp_body.person;
+		var age_person = +Object.values(person)[0];
+
+		pm.test("Проверить, что что параметр u_age равен age из request", function(){
+		    pm.expect(req_age).to.be.equals(age_person)
+		})
+21. Проверить, что параметр u_salary_5_years равен salary*4.2 из request (salary забрать из request.)
+		var req_body = pm.request.toJSON;
+		var req_body = request.data;
+		var req_salary = +req_body.salary;
+
+		var resp_body = JSON.parse(responseBody);
+		var person = resp_body.person;
+		var salary_5_years = +person.u_salary_5_years;
+
+		pm.test("Проверить, что параметр u_salary_5_years равен salary*4.2 из request", function(){
+		    pm.expect(req_salary*4.2).to.be.equals(salary_5_years)
+		})
+22. ***Написать цикл который выведет в консоль по порядку элементы списка из параметра person.
+		var parsResponse = JSON.parse(responseBody);
+		var respSalary = parsResponse.person;
+
+		for (const property in respSalary) {
+		  console.log(`${property}: ${respSalary[property]}`);
+		}
