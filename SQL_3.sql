@@ -3,60 +3,60 @@ select * from employees e;
 select * from roles_employee re;
 select * from roles r;
 select * from salary s;
---1. Вывести всех работников чьи зарплаты есть в базе, вместе с зарплатами.
+--1. Р’С‹РІРµСЃС‚Рё РІСЃРµС… СЂР°Р±РѕС‚РЅРёРєРѕРІ С‡СЊРё Р·Р°СЂРїР»Р°С‚С‹ РµСЃС‚СЊ РІ Р±Р°Р·Рµ, РІРјРµСЃС‚Рµ СЃ Р·Р°СЂРїР»Р°С‚Р°РјРё.
 select employee_name, monthly_salary from employee_salary
 join employees on employee_salary.employee_id = employees.id
 join salary on employee_salary.salary_id = salary.id;
---2. Вывести всех работников у которых ЗП меньше 2000.
+--2. Р’С‹РІРµСЃС‚Рё РІСЃРµС… СЂР°Р±РѕС‚РЅРёРєРѕРІ Сѓ РєРѕС‚РѕСЂС‹С… Р—Рџ РјРµРЅСЊС€Рµ 2000.
 select employee_name, monthly_salary from employee_salary
 join employees on employee_salary.employee_id = employees.id 
 join salary on employee_salary.salary_id = salary.id
 where monthly_salary < 2000;
---3. Вывести все зарплатные позиции, но работник по ним не назначен. (ЗП есть, но не понятно кто её получает.)
+--3. Р’С‹РІРµСЃС‚Рё РІСЃРµ Р·Р°СЂРїР»Р°С‚РЅС‹Рµ РїРѕР·РёС†РёРё, РЅРѕ СЂР°Р±РѕС‚РЅРёРє РїРѕ РЅРёРј РЅРµ РЅР°Р·РЅР°С‡РµРЅ. (Р—Рџ РµСЃС‚СЊ, РЅРѕ РЅРµ РїРѕРЅСЏС‚РЅРѕ РєС‚Рѕ РµС‘ РїРѕР»СѓС‡Р°РµС‚.)
 select monthly_salary from salary s 
 left join employee_salary es on s.id = es.salary_id
 where es.employee_id is null;
---4. Вывести все зарплатные позиции  меньше 2000 но работник по ним не назначен. (ЗП есть, но не понятно кто её получает.)
+--4. Р’С‹РІРµСЃС‚Рё РІСЃРµ Р·Р°СЂРїР»Р°С‚РЅС‹Рµ РїРѕР·РёС†РёРё  РјРµРЅСЊС€Рµ 2000 РЅРѕ СЂР°Р±РѕС‚РЅРёРє РїРѕ РЅРёРј РЅРµ РЅР°Р·РЅР°С‡РµРЅ. (Р—Рџ РµСЃС‚СЊ, РЅРѕ РЅРµ РїРѕРЅСЏС‚РЅРѕ РєС‚Рѕ РµС‘ РїРѕР»СѓС‡Р°РµС‚.)
 select monthly_salary 
 from salary s 
 left join employee_salary es 
 on s.id = es.salary_id
 where es.employee_id is null and s.monthly_salary < 2000;
---5. Найти всех работников кому не начислена ЗП.
+--5. РќР°Р№С‚Рё РІСЃРµС… СЂР°Р±РѕС‚РЅРёРєРѕРІ РєРѕРјСѓ РЅРµ РЅР°С‡РёСЃР»РµРЅР° Р—Рџ.
 select employee_name from employees
 left join employee_salary
 on employees.id = employee_salary.employee_id
 where employee_salary.salary_id is null;
---6. Вывести всех работников с названиями их должности.
+--6. Р’С‹РІРµСЃС‚Рё РІСЃРµС… СЂР°Р±РѕС‚РЅРёРєРѕРІ СЃ РЅР°Р·РІР°РЅРёСЏРјРё РёС… РґРѕР»Р¶РЅРѕСЃС‚Рё.
 select employee_name, role_name from roles_employee
 join employees on roles_employee.employee_id = employees.id
 join roles on roles_employee.role_id = roles.id;
---7. Вывести имена и должность только Java разработчиков.
+--7. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё РґРѕР»Р¶РЅРѕСЃС‚СЊ С‚РѕР»СЊРєРѕ Java СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРІ.
 select employee_name, role_name from roles_employee re 
 join employees e on re.employee_id = e.id
 join roles r on re.role_id = r.id
 where r.role_name like '%Java%' and r.role_name not like '%JavaScript%';
---8. Вывести имена и должность только Python разработчиков.
+--8. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В  Р“РЃ Р“В¤Р“В®Р“В«Р“В¦Р“В­Р“В®Р“В±Р“Р†Р“С Р“Р†Р“В®Р“В«Р“СР“Р„Р“В® Python Р“В°Р“В Р“В§Р“В°Р“В Р“РЋР“В®Р“Р†Р“В·Р“РЃР“Р„Р“В®Р“Сћ.
 select employee_name, role_name from roles_employee re 
 join employees e on re.employee_id = e.id 
 join roles r on re.role_id = r.id 
 where r.role_name like '%Python%';
---9. Вывести имена и должность всех QA инженеров.
+--9. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В  Р“РЃ Р“В¤Р“В®Р“В«Р“В¦Р“В­Р“В®Р“В±Р“Р†Р“С Р“СћР“В±Р“ТђР“Вµ QA Р“РЃР“В­Р“В¦Р“ТђР“В­Р“ТђР“В°Р“В®Р“Сћ.
 select employee_name, role_name from roles_employee re 
 join employees e on re.employee_id = e.id 
 join roles r on re.role_id = r.id 
 where r.role_name like '%QA%';
---10. Вывести имена и должность ручных QA инженеров.
+--10. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В  Р“РЃ Р“В¤Р“В®Р“В«Р“В¦Р“В­Р“В®Р“В±Р“Р†Р“С Р“В°Р“С–Р“В·Р“В­Р“В»Р“Вµ QA Р“РЃР“В­Р“В¦Р“ТђР“В­Р“ТђР“В°Р“В®Р“Сћ.
 select employee_name, role_name from roles_employee re 
 join employees e on re.employee_id = e.id 
 join roles r on re.role_id = r.id
 where r.role_name like '%Manual%';
---11. Вывести имена и должность автоматизаторов QA
+--11. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В  Р“РЃ Р“В¤Р“В®Р“В«Р“В¦Р“В­Р“В®Р“В±Р“Р†Р“С Р“В Р“СћР“Р†Р“В®Р“В¬Р“В Р“Р†Р“РЃР“В§Р“В Р“Р†Р“В®Р“В°Р“В®Р“Сћ QA
 select employee_name, role_name from roles_employee re 
 join employees e on re.employee_id = e.id
 join roles r ON re.role_id = r.id
 where r.role_name like '%Automation%';
---12. Вывести имена и зарплаты Junior специалистов
+--12. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В  Р“РЃ Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р†Р“В» Junior Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ
 select employee_name, monthly_salary from roles_employee re
 left join employees e on re.employee_id = e.id 
 left join roles r on re.role_id = r.id
@@ -64,7 +64,7 @@ left join employee_salary es on e.id = es.id
 left join salary s on es.salary_id = s.id 
 where r.role_name like '%Junior%';
 
---13. Вывести имена и зарплаты Middle специалистов
+--13. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В  Р“РЃ Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р†Р“В» Middle Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ
 select employee_name, monthly_salary from employee_salary es
 left join employees e on es.employee_id = e.id 
 left join salary s on es.salary_id = s.id
@@ -72,7 +72,7 @@ left join roles_employee re on es.employee_id = re.employee_id
 left join roles on re.role_id = roles.id
 where roles.role_name like '%Middle%'
 
---14. Вывести имена и зарплаты Senior специалистов
+--14. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В  Р“РЃ Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р†Р“В» Senior Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ
 select employee_name, monthly_salary from employee_salary es 
 left join employees e on es.employee_id = e.id
 left join salary s on es.salary_id = s.id 
@@ -80,7 +80,7 @@ left join roles_employee re on es.employee_id = re.employee_id
 left join roles r on re.role_id = r.id 
 where r.role_name like '%Senior%';
 
---15. Вывести зарплаты Java разработчиков]
+--15. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р†Р“В» Java Р“В°Р“В Р“В§Р“В°Р“В Р“РЋР“В®Р“Р†Р“В·Р“РЃР“Р„Р“В®Р“Сћ]
 select monthly_salary from employee_salary es 
 left join employees e on es.employee_id = e.id
 left join salary s on es.salary_id = s.id 
@@ -88,7 +88,7 @@ left join roles_employee re on es.employee_id = re.employee_id
 left join roles r on re.role_id = r.id 
 where r.role_name like '%Java%' and r.role_name not like '%JavaScript%';
 
---16. Вывести зарплаты Python разработчиков
+--16. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р†Р“В» Python Р“В°Р“В Р“В§Р“В°Р“В Р“РЋР“В®Р“Р†Р“В·Р“РЃР“Р„Р“В®Р“Сћ
 select monthly_salary from employee_salary es 
 left join salary s on es.salary_id = s.id 
 left join employees e on es.employee_id = e.id
@@ -96,7 +96,7 @@ left join roles_employee re on es.employee_id = re.employee_id
 left join roles r on re.role_id = r.id
 where r.role_name like '%Python%';
 
---17. Вывести имена и зарплаты Junior Python разработчиков
+--17. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В  Р“РЃ Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р†Р“В» Junior Python Р“В°Р“В Р“В§Р“В°Р“В Р“РЋР“В®Р“Р†Р“В·Р“РЃР“Р„Р“В®Р“Сћ
 select employee_name, role_name from roles_employee re 
 join employees e on re.employee_id = e.id
 join roles r on re.role_id = r.id
@@ -109,7 +109,7 @@ left join roles_employee re on es.employee_id = re.employee_id
 left join roles r on re.role_id = r.id 
 where r.role_name like '%Junior Python%';
 
---18. Вывести имена и зарплаты Middle JS разработчиков
+--18. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В  Р“РЃ Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р†Р“В» Middle JS Р“В°Р“В Р“В§Р“В°Р“В Р“РЋР“В®Р“Р†Р“В·Р“РЃР“Р„Р“В®Р“Сћ
 select employee_name, monthly_salary from employee_salary es 
 left join employees e on es.employee_id = e.id 
 left join salary s on es.salary_id = s.id 
@@ -117,7 +117,7 @@ left join roles_employee re on es.employee_id = re.employee_id
 left join roles r on re.role_id = r.id 
 where r.role_name like '%Middle JavaScript developer%';
 
---19. Вывести имена и зарплаты Senior Java разработчиков
+--19. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В  Р“РЃ Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р†Р“В» Senior Java Р“В°Р“В Р“В§Р“В°Р“В Р“РЋР“В®Р“Р†Р“В·Р“РЃР“Р„Р“В®Р“Сћ
 select employee_name, monthly_salary from employee_salary es 
 left join employees e on es.employee_id = e.id 
 left join salary s on es.salary_id = s.id 
@@ -125,7 +125,7 @@ left join roles_employee re on es.employee_id = re.employee_id
 left join roles r on re.role_id = r.id 
 where r.role_name like '%Senior Java%';
 
---20. Вывести зарплаты Junior QA инженеров
+--20. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р†Р“В» Junior QA Р“РЃР“В­Р“В¦Р“ТђР“В­Р“ТђР“В°Р“В®Р“Сћ
 select employee_name, monthly_salary from employee_salary es 
 left join employees e on es.employee_id = e.id 
 left join salary s on es.salary_id = s.id 
@@ -133,7 +133,7 @@ left join roles_employee re on es.employee_id = re.employee_id
 left join roles r on re.role_id = r.id 
 where r.role_name like '%Junior% %QA%';
 
---21. Вывести среднюю зарплату всех Junior специалистов
+--21. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“В±Р“В°Р“ТђР“В¤Р“В­Р“С•Р“С• Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р†Р“С– Р“СћР“В±Р“ТђР“Вµ Junior Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ
 select employee_name, monthly_salary from employee_salary es 
 left join employees e on es.employee_id = e.id 
 left join salary s on es.salary_id = s.id 
@@ -141,53 +141,53 @@ left join roles_employee re on es.employee_id = re.employee_id
 left join roles r on re.role_id = r.id 
 where r.role_name like '%Junior%';
 
---22. Вывести сумму зарплат JS разработчиков
+--22. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“В±Р“С–Р“В¬Р“В¬Р“С– Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р† JS Р“В°Р“В Р“В§Р“В°Р“В Р“РЋР“В®Р“Р†Р“В·Р“РЃР“Р„Р“В®Р“Сћ
 select employee_name, role_name from roles_employee re 
 join employees e on re.employee_id = e.id
 join roles r on re.role_id = r.id
 where r.role_name like '%Junior%';
---23. Вывести минимальную ЗП QA инженеров
+--23. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“В¬Р“РЃР“В­Р“РЃР“В¬Р“В Р“В«Р“СР“В­Р“С–Р“С• Р“вЂЎР“РЏ QA Р“РЃР“В­Р“В¦Р“ТђР“В­Р“ТђР“В°Р“В®Р“Сћ
 select min(monthly_salary) from roles_employee re
 left join roles r on re.role_id = r.id 
 left join employee_salary es on re.employee_id = es.employee_id 
 left join salary s on es.salary_id = s.id 
 where role_name like '%QA%';
---24. Вывести максимальную ЗП QA инженеров
+--24. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“В¬Р“В Р“Р„Р“В±Р“РЃР“В¬Р“В Р“В«Р“СР“В­Р“С–Р“С• Р“вЂЎР“РЏ QA Р“РЃР“В­Р“В¦Р“ТђР“В­Р“ТђР“В°Р“В®Р“Сћ
 select max(monthly_salary) from roles_employee re
 left join roles r on re.role_id = r.id 
 left join employee_salary es on re.employee_id = es.employee_id 
 left join salary s on es.salary_id = s.id 
 where role_name like '%QA%';
---25. Вывести количество QA инженеров
+--25. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“Р„Р“В®Р“В«Р“РЃР“В·Р“ТђР“В±Р“Р†Р“СћР“В® QA Р“РЃР“В­Р“В¦Р“ТђР“В­Р“ТђР“В°Р“В®Р“Сћ
 select count(monthly_salary) from roles_employee re
 left join roles r on re.role_id = r.id 
 left join employee_salary es on re.employee_id = es.employee_id 
 left join salary s on es.salary_id = s.id 
 where role_name like '%QA%';
---26. Вывести количество Middle специалистов.
+--26. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“Р„Р“В®Р“В«Р“РЃР“В·Р“ТђР“В±Р“Р†Р“СћР“В® Middle Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ.
 select count(employee_name) from roles_employee re 
 left join employees e on re.employee_id = e.id 
 left join roles r on re.role_id = r.id 
 where r.role_name like '%Middle%';
---27. Вывести количество разработчиков
+--27. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“Р„Р“В®Р“В«Р“РЃР“В·Р“ТђР“В±Р“Р†Р“СћР“В® Р“В°Р“В Р“В§Р“В°Р“В Р“РЋР“В®Р“Р†Р“В·Р“РЃР“Р„Р“В®Р“Сћ
 select count(employee_name) from roles_employee re 
 left join employees e on re.employee_id = e.id 
 left join roles r on re.role_id = r.id 
 where r.role_name like '%developer%';
---28. Вывести фонд (сумму) зарплаты разработчиков.
+--28. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“Т‘Р“В®Р“В­Р“В¤ (Р“В±Р“С–Р“В¬Р“В¬Р“С–) Р“В§Р“В Р“В°Р“Р‡Р“В«Р“В Р“Р†Р“В» Р“В°Р“В Р“В§Р“В°Р“В Р“РЋР“В®Р“Р†Р“В·Р“РЃР“Р„Р“В®Р“Сћ.
 select sum(monthly_salary) from roles_employee re
 left join roles r on re.role_id = r.id 
 left join employee_salary es on re.employee_id = es.employee_id 
 left join salary s on es.salary_id = s.id 
 where role_name like '%developer%';
---29. Вывести имена, должности и ЗП всех специалистов по возрастанию
+--29. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В , Р“В¤Р“В®Р“В«Р“В¦Р“В­Р“В®Р“В±Р“Р†Р“РЃ Р“РЃ Р“вЂЎР“РЏ Р“СћР“В±Р“ТђР“Вµ Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ Р“Р‡Р“В® Р“СћР“В®Р“В§Р“В°Р“В Р“В±Р“Р†Р“В Р“В­Р“РЃР“С•
 select employee_name, role_name, monthly_salary from roles_employee re 
 left join employees e on re.employee_id = e.id 
 left join roles r ON re.role_id = r.id
 left join employee_salary es on re.employee_id = es.employee_id 
 left join salary s on es.salary_id = s.id
 order by employee_name;
---30. Вывести имена, должности и ЗП всех специалистов по возрастанию у специалистов у которых ЗП от 1700 до 2300
+--30. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В , Р“В¤Р“В®Р“В«Р“В¦Р“В­Р“В®Р“В±Р“Р†Р“РЃ Р“РЃ Р“вЂЎР“РЏ Р“СћР“В±Р“ТђР“Вµ Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ Р“Р‡Р“В® Р“СћР“В®Р“В§Р“В°Р“В Р“В±Р“Р†Р“В Р“В­Р“РЃР“С• Р“С– Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ Р“С– Р“Р„Р“В®Р“Р†Р“В®Р“В°Р“В»Р“Вµ Р“вЂЎР“РЏ Р“В®Р“Р† 1700 Р“В¤Р“В® 2300
 select employee_name, role_name, monthly_salary from roles_employee re 
 left join employees e on re.employee_id = e.id 
 left join roles r ON re.role_id = r.id
@@ -195,7 +195,7 @@ left join employee_salary es on re.employee_id = es.employee_id
 left join salary s on es.salary_id = s.id
 where monthly_salary between 1700 and 2300
 order by employee_name;
---31. Вывести имена, должности и ЗП всех специалистов по возрастанию у специалистов у которых ЗП меньше 2300
+--31. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В , Р“В¤Р“В®Р“В«Р“В¦Р“В­Р“В®Р“В±Р“Р†Р“РЃ Р“РЃ Р“вЂЎР“РЏ Р“СћР“В±Р“ТђР“Вµ Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ Р“Р‡Р“В® Р“СћР“В®Р“В§Р“В°Р“В Р“В±Р“Р†Р“В Р“В­Р“РЃР“С• Р“С– Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ Р“С– Р“Р„Р“В®Р“Р†Р“В®Р“В°Р“В»Р“Вµ Р“вЂЎР“РЏ Р“В¬Р“ТђР“В­Р“СР“С‘Р“Тђ 2300
 select employee_name, role_name, monthly_salary from roles_employee re 
 left join employees e on re.employee_id = e.id 
 left join roles r ON re.role_id = r.id
@@ -203,7 +203,7 @@ left join employee_salary es on re.employee_id = es.employee_id
 left join salary s on es.salary_id = s.id
 where monthly_salary < 2300
 order by employee_name;
---32. Вывести имена, должности и ЗП всех специалистов по возрастанию у специалистов у которых ЗП равна 1100, 1500, 2000
+--32. Р“вЂљР“В»Р“СћР“ТђР“В±Р“Р†Р“РЃ Р“РЃР“В¬Р“ТђР“В­Р“В , Р“В¤Р“В®Р“В«Р“В¦Р“В­Р“В®Р“В±Р“Р†Р“РЃ Р“РЃ Р“вЂЎР“РЏ Р“СћР“В±Р“ТђР“Вµ Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ Р“Р‡Р“В® Р“СћР“В®Р“В§Р“В°Р“В Р“В±Р“Р†Р“В Р“В­Р“РЃР“С• Р“С– Р“В±Р“Р‡Р“ТђР“В¶Р“РЃР“В Р“В«Р“РЃР“В±Р“Р†Р“В®Р“Сћ Р“С– Р“Р„Р“В®Р“Р†Р“В®Р“В°Р“В»Р“Вµ Р“вЂЎР“РЏ Р“В°Р“В Р“СћР“В­Р“В  1100, 1500, 2000
 select employee_name, role_name, monthly_salary from roles_employee re 
 left join employees e on re.employee_id = e.id 
 left join roles r ON re.role_id = r.id
